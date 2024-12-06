@@ -108,7 +108,7 @@ const QuestionInput: React.FC<QuestionInputProps> = ({
         try {
             const base64Image = image.split(",")[1]; // Remove "data:image/jpeg;base64,"
             const response = await axios.post("http://ken6a03.pythonanywhere.com/api/ocr/extract", {
-                image: base64Image,
+                image_data: `data:image/png;base64,${base64Image}`,
             });
 
             if (response.data && response.data.text) {
@@ -116,7 +116,7 @@ const QuestionInput: React.FC<QuestionInputProps> = ({
 
                 // Clean up the LaTeX string (remove the \[ and \] block delimiters)
                 responseText = responseText.replace(/\\\[|\\\]/g, "").trim();
-
+                console.log(responseText)
                 // Pass the cleaned-up LaTeX expression to the state
                 setApiResponse(responseText);
             } else {

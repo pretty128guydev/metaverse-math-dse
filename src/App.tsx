@@ -8,6 +8,9 @@ import axios from "axios";
 const App: React.FC = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [apiResponse, setApiResponse] = useState<string | null>(null);
+  const [apiResponses, setApiResponses] = useState<string | null>(null);
+  const [answerResponses, setAnswerResponse] = useState<string | null>(null);
+  const [solutionResponses, setSolutionResponses] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
@@ -21,17 +24,24 @@ const App: React.FC = () => {
         </header>
 
         <main className="flex-grow flex flex-col items-center px-5 py-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl">
             <QuestionInput
               setNotification={setNotification}
               notification={notification}
               setIsLoading={setIsLoading}
               setApiResponse={setApiResponse}
             />
-            <AnswerInput />
+            <AnswerInput
+              setNotification={setNotification}
+              notification={notification}
+              setIsLoading={setIsLoading}
+              setAnswerResponse={setAnswerResponse} />
           </div>
-          <Actions />
-          <OutputDisplay isLoading={isLoading} output={apiResponse} />
+          <Actions
+            output={apiResponse}
+            setIsLoading={setIsLoading}
+            setApiResponses={setApiResponses} setSolutionResponses={setSolutionResponses} />
+          <OutputDisplay isLoading={isLoading} output={apiResponse} outputs={apiResponses} solutionResponses={solutionResponses} answerResponses={answerResponses} />
         </main>
 
         <footer className="w-full py-4 text-center bg-gray-800 text-gray-400">
