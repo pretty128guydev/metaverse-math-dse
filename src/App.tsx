@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import QuestionInput from "./components/QuestionInput";
-import AnswerInput from "./components/AnswerInput";
 import OutputDisplay from "./components/OutputDisplay";
-import Actions from "./components/Actions";
-import axios from "axios";
-import GenerateQuestion from "./components/GenerateQuestion";
-import AnswerOutputDisplay from "./components/AnswerOutputDisplay";
 
 const App: React.FC = () => {
-  const [answerNotification, setAnswerNotification] = useState<string | null>(null);
   const [questionNotification, setQuestoinNotification] = useState<string | null>(null);
   const [apiResponse, setApiResponse] = useState<string | null>(null);
   const [apiResponses, setApiResponses] = useState<string | null>(null);

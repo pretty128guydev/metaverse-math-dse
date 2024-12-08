@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MathJax } from "better-react-mathjax";
 import ProgressBar from "./ProgressBar";
-import './OutputDisplay.css'
 import { EditableMathField, StaticMathField, addStyles } from "react-mathquill";
 import Webcam from "react-webcam";
 import axios from "axios";
@@ -33,13 +31,6 @@ interface EvaluationsProps {
     step: string;
 }
 
-const RenderMath: React.FC<{ content: string }> = ({ content }) => (
-    <MathJax style={{ textAlign: "start" }}>{content}</MathJax>
-);
-
-/**
- * Renders the steps provided in the solutionResponses.
- */
 const RenderSteps: React.FC<{ steps: string[] }> = ({ steps }) => (
     <>
         <h3 className="text-lg font-medium mb-2">Solution Steps:</h3>
