@@ -5,8 +5,7 @@ import OutputDisplay from "./components/OutputDisplay";
 const App: React.FC = () => {
   const [questionNotification, setQuestoinNotification] = useState<string | null>(null);
   const [apiResponse, setApiResponse] = useState<string | null>(null);
-  const [apiResponses, setApiResponses] = useState<string | null>(null);
-  const [answerResponses, setAnswerResponse] = useState<string | null>(null);
+  const [apiResponses] = useState<string | null>(null);
   const [solutionResponses, setSolutionResponses] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
