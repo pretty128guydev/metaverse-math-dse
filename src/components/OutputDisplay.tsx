@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { MathJax } from "better-react-mathjax";
 import ProgressBar from "./ProgressBar";
 import './OutputDisplay.css'
 import { EditableMathField, StaticMathField, addStyles } from "react-mathquill";
@@ -46,18 +46,6 @@ const RenderSteps: React.FC<{ steps: string[] }> = ({ steps }) => (
         {steps.map((step, index) => (
             <div key={index} className="mb-2">
                 <StaticMathField>{normalizeSlashes(step)}</StaticMathField>
-            </div>
-        ))}
-    </>
-);
-
-
-const RenderQuestions: React.FC<{ questions: string[] }> = ({ questions }) => (
-    <>
-        <h3 className="text-lg font-medium mb-2">Similar Questions:</h3>
-        {questions.map((question, index) => (
-            <div key={index} className="mb-2">
-                <RenderMath content={`\\[ ${question} \\]`} />
             </div>
         ))}
     </>
