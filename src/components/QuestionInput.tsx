@@ -28,7 +28,11 @@ const QuestionInput: React.FC<QuestionInputProps> = ({
 
     useEffect(() => {
         navigator.mediaDevices
-            .getUserMedia({ video: true })
+            .getUserMedia({
+                video: {
+                    facingMode: "environment" // This will use the back camera on mobile
+                }
+            })
             .then(() => {
                 setCameraAccessible(true);
             })
@@ -241,6 +245,7 @@ const QuestionInput: React.FC<QuestionInputProps> = ({
                             audio={false}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
+                            videoConstraints={{ facingMode: "environment" }}
                             className="rounded shadow"
                         />
                         <button
