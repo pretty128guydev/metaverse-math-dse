@@ -378,16 +378,22 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading, setIsL
                         <StaticMathField>{normalizeSlashes(similarQuestion)}</StaticMathField>
                     </div>
                 )}
-                <div className="flex">
+                <div className="flex" style={{
+                    "pointerEvents": "none"
+                }}>
                     {!isLoading && answerSteps.length > 0 &&
-                        <div className="w-[40%]">
+                        <div className="w-[40%]" style={{
+                            "pointerEvents": "none"
+                        }}>
                             <RenderSteps steps={answerSteps} />
                             <h4 className="text-lg font-medium mb-2">Final Answer:</h4>
                             <StaticMathField>{normalizeSlashes(finalAnswer2)}</StaticMathField>
                         </div>
                     }
                     {evaluation && similarQuestion &&
-                        <div className="w-[60%]">
+                        <div className="w-[60%]" style={{
+                            "pointerEvents": "none"
+                        }}>
                             <RenderEvaluation evaluations={evaluation || []} />
                         </div>
                     }
