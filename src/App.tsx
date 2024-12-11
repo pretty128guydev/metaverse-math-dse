@@ -1,55 +1,105 @@
-import React, { useState } from "react";
-import QuestionInput from "./components/QuestionInput";
-import OutputDisplay from "./components/OutputDisplay";
+import React, { useEffect, useState } from "react";
+import Upload from "./components/Upload";
+import Action from "./components/Action";
+import BPanel from "./components/BPanel";
+import CPanel from "./components/CPanel";
+import { ToastContainer } from "react-toastify";
+
+const calculateZoom = () => {
+  const baseWidth = 1800;
+  const baseHeight = 950;
+  const scaleWidth = window.innerWidth / baseWidth; // Scale relative to viewport width
+  const scaleHeight = window.innerHeight / baseHeight; // Scale relative to viewport height
+  return Math.min(scaleWidth, scaleHeight);
+};
 
 const App: React.FC = () => {
-  const [questionNotification, setQuestoinNotification] = useState<string | null>(null);
-  const [apiResponse, setApiResponse] = useState<string | null>(null);
-  const [apiResponses] = useState<string | null>(null);
-  const [solutionResponses, setSolutionResponses] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(calculateZoom());
+  const [apiResponses] = useState<string>("");
+  const [questionImage, setQuestionImage] = useState<string>("");
+  const [solutionResponses, setSolutionResponses] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [similarQuestion, setSetSimilarQuestion] = useState<string>("");
+  const [answerResponse, setAnswerResponse] = useState<any>("");
+  const [evaluation, setEvaluation] = useState<string>("");
+  const [edit, setEdit] = useState<boolean>(false);
+  const [uploadType, setUploadType] = useState<string>("Question");
+
+  useEffect(() => {
+    const handleResize = () => setZoom(calculateZoom());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
 
   return (
-    <div>
-      <div className="min-h-screen flex flex-col bg-gray-900 text-gray-200">
-        <header className="w-full flex justify-center items-center px-5 py-4 shadow-md bg-gray-800">
-          <h1 className="text-3xl font-bold text-blue-400">
-            Metamersive Math DSE
-          </h1>
-        </header>
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        backgroundImage: "url(/background.jpeg)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="zoom-container m-4" style={{ zoom }}>
+        <div className="min-h-screen flex-grow flex flex-col sm:flex-row justify-around">
+          {/* Upload */}
+          <Upload
+            setIsLoading={setIsLoading}
+            setQuestionImage={setQuestionImage}
+            setAnswerResponse={setAnswerResponse}
+            setEvaluation={setEvaluation}
+            uploadType={uploadType}
+            setUploadType={setUploadType}
+          />
 
-        <main className="flex-grow flex flex-col items-center px-5 py-10">
-          <div className="grid grid-cols-1 w-full max-w-6xl">
-            <QuestionInput
-              setQuestoinNotification={setQuestoinNotification}
-              questionNotification={questionNotification}
-              setIsLoading={setIsLoading}
-              setSolutionResponses={setSolutionResponses}
-              setApiResponse={setApiResponse}
-            />
-            {/* <GenerateQuestion /> */}
+          {/* Actions */}
+          <div className="w-full sm:w-[67%] flex flex-col justify-between m-10">
+            <div className="relative rounded-md p-4 flex-grow  mt-5">
+              {/* {Actions} */}
+              <Action
+                edit={edit}
+                setSolutionResponses={setSolutionResponses}
+                questionImage={questionImage}
+                setIsLoading={setIsLoading}
+                setSetSimilarQuestion={setSetSimilarQuestion}
+                setEvaluation={setEvaluation}
+                answerResponse={answerResponse}
+                uploadType={uploadType}
+                setEdit={setEdit} />
+              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-1 h-full">
+                <BPanel
+                  uploadType={uploadType}
+                  setAnswerResponse={setAnswerResponse}
+                  edit={edit}
+                  answerResponse={answerResponse}
+                  similarQuestion={similarQuestion}
+                  setQuestionImage={setQuestionImage}
+                  setIsLoading={setIsLoading}
+                  solutionResponses={solutionResponses}
+                  questionImage={questionImage}
+                  isLoading={isLoading} />
+                <CPanel
+                  evaluation={evaluation}
+                  isLoading={isLoading} />
+              </div>
+            </div>
           </div>
-          {/* <Actions
-            output={apiResponse}
-            setIsLoading={setIsLoading}
-            setApiResponses={setApiResponses} setSolutionResponses={setSolutionResponses} /> */}
-          <OutputDisplay
-            setApiResponse={setApiResponse}
-            setIsLoading={setIsLoading} isLoading={isLoading} output={apiResponse} outputs={apiResponses} solutionResponses={solutionResponses} setSolutionResponses={setSolutionResponses} />
-          {/* <AnswerInput
-            setAnswerNotification={setAnswerNotification}
-            answerNotification={answerNotification}
-            setIsLoading={setIsLoading}
-            setAnswerResponse={setAnswerResponse} />
-          <AnswerOutputDisplay
-            setIsLoading={setIsLoading} isLoading={isLoading} answerResponses={answerResponses} /> */}
-        </main>
-
-        <footer className="w-full py-4 text-center bg-gray-800 text-gray-400">
-          © {new Date().getFullYear()} Metamersive Math DSE
-        </footer>
+        </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={false}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        closeButton={false}
+        theme={"dark"}
+      />
     </div>
   );
 };
