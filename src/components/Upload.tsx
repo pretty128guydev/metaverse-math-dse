@@ -13,6 +13,7 @@ interface UploadProps {
     setUploadType: (type: string) => void;
     setSolutionResponses: (response: any) => void;
     setCapturedImageType: (type: string) => void;
+    setDisabledGenerateButton: (status: boolean) => void;
     uploadType: string;
     mainQuestionValid: number;
     questionImage: string;
@@ -25,6 +26,7 @@ const Upload: React.FC<UploadProps> = ({
     setEvaluation,
     setUploadType,
     setSolutionResponses,
+    setDisabledGenerateButton,
     setCapturedImageType,
     mainQuestionValid,
     uploadType,
@@ -181,6 +183,7 @@ const Upload: React.FC<UploadProps> = ({
             if (response.ok) {
                 console.log("Success:", data);
                 setSolutionResponses(data);
+                setDisabledGenerateButton(true)
             } else {
                 console.error("Error:", data);
                 alert(`Request failed: ${data.error || "Unknown error"}`);

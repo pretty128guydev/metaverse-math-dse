@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [zoom, setZoom] = useState(calculateZoom());
   const [capturedImageType, setCapturedImageType] = useState<string>("");
+  const [disabledGenerateButton, setDisabledGenerateButton] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => setZoom(calculateZoom());
@@ -57,6 +58,7 @@ const App: React.FC = () => {
             uploadType={uploadType}
             setUploadType={setUploadType}
             mainQuestionValid={mainQuestionValid}
+            setDisabledGenerateButton={setDisabledGenerateButton}
           />
 
           {/* Actions */}
@@ -77,6 +79,7 @@ const App: React.FC = () => {
                 setAnswerResponse={setAnswerResponse}
                 answerResponse={answerResponse}
                 uploadType={uploadType}
+                disabledGenerateButton={disabledGenerateButton}
                 setEdit={setEdit} />
               <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-1 h-full">
                 <BPanel

@@ -15,10 +15,11 @@ interface Props {
     edit: boolean;
     capturedImageType: string;
     uploadType: string;
+    disabledGenerateButton: boolean;
 }
 
 
-const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setUploadType, setEdit, setSetSimilarQuestion, setSolutionResponses, setIsLoading, setEvaluation, capturedImageType, solutionResponses, uploadType, answerResponse, edit, questionImage }) => {
+const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setUploadType, setEdit, setSetSimilarQuestion, setSolutionResponses, setIsLoading, setEvaluation, disabledGenerateButton, solutionResponses, uploadType, answerResponse, edit, questionImage }) => {
 
     const handleGetSolution = async () => {
         setIsLoading(true)
@@ -37,7 +38,6 @@ const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setU
             const data = await response.json();
 
             if (response.ok) {
-                console.log("Success:", data);
                 setSolutionResponses(data);
             } else {
                 console.error("Error:", data);
@@ -117,7 +117,7 @@ const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setU
             setIsLoading(false); // Stop loading
         }
     };
-
+    console.log(disabledGenerateButton)
     return (
         <div className="absolute flex justify-around items-center bg-[#152143] rounded-3xl m-[auto] w-[54%] left-[23%] mt-[-82px] h-[80px] z-[10]">
             <h2 className="text-yellow-500 font-bold text-2xl">ACTION</h2>
@@ -139,7 +139,7 @@ const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setU
                         OK?
                     </button>
                 }
-                <button style={{ opacity: !solutionResponses ? "50%" : "100%", pointerEvents: !solutionResponses ? "none" : "visible" }} disabled={!solutionResponses ? true : false} onClick={handleGenerateQuestion} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
+                <button style={{ opacity: !disabledGenerateButton ? "50%" : "100%", pointerEvents: !disabledGenerateButton ? "none" : "visible" }} disabled={!disabledGenerateButton ? true : false} onClick={handleGenerateQuestion} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
                     SIMILAR QUESTION
                 </button>
             </div>
