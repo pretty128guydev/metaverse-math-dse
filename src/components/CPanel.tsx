@@ -97,17 +97,17 @@ const CPanel: React.FC<Props> = ({ evaluation, isLoading, solutionResponses, upl
                 {isLoading && <ProgressBar isLoading={isLoading} />}
                 <h3 className="font-bold text-4xl ml-2 text-end">C</h3>
                 {evaluation &&
-                    <div className="mt-[50px]" style={{
+                    <div className="mt-[0px]" style={{
                         "pointerEvents": "none"
                     }}>
-                        <h4>Answer is {evaluation?.final_answer ? "Correct" : "Wrong"}</h4>
+                        <h1 style={{color: "blue", fontWeight: "bold", fontSize: "25px", marginBottom: "20px"}}>Answer is {evaluation?.final_answer ? "Correct" : "Wrong"}</h1>
                         <RenderEvaluation evaluations={evaluation || []} />
                     </div>
                 }
                 {uploadType === "Question" && solutionSteps.length > 0 && (
-                    <div className="mb-3 mt-[50px]" style={{ pointerEvents: "none" }}>
+                    <div className="mb-3" style={{ pointerEvents: "none" }}>
                         <h4 className="text-lg font-medium mb-2">Topic:</h4>
-                        <h4 style={{ color: "black" }}> {topic}</h4>
+                        <h4 style={{color: "blue", fontWeight: "bold", fontSize: "25px", marginBottom: "20px"}}> {topic}</h4>
                         <RenderSolutionSteps steps={solutionSteps} />
                         <h4 className="text-lg font-medium mb-2">Final Answer:</h4>
                         {isValidLaTeX(normalizeSlashes(solutionFinalAnswer)) ? (

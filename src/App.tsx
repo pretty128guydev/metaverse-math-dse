@@ -74,6 +74,7 @@ const App: React.FC = () => {
                 setIsLoading={setIsLoading}
                 setSetSimilarQuestion={setSetSimilarQuestion}
                 setEvaluation={setEvaluation}
+                setAnswerResponse={setAnswerResponse}
                 answerResponse={answerResponse}
                 uploadType={uploadType}
                 setEdit={setEdit} />

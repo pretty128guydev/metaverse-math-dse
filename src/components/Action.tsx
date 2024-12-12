@@ -8,6 +8,7 @@ interface Props {
     setEvaluation: (evaluation: any) => void;
     setUploadType: (type: string) => void;
     setCapturedImageType: (type: string) => void;
+    setAnswerResponse: (response: string) => void;
     questionImage: string;
     answerResponse: any;
     solutionResponses: any;
@@ -17,7 +18,7 @@ interface Props {
 }
 
 
-const Action: React.FC<Props> = ({ setCapturedImageType, setUploadType, setEdit, setSetSimilarQuestion, setSolutionResponses, setIsLoading, setEvaluation, capturedImageType, solutionResponses, uploadType, answerResponse, edit, questionImage }) => {
+const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setUploadType, setEdit, setSetSimilarQuestion, setSolutionResponses, setIsLoading, setEvaluation, capturedImageType, solutionResponses, uploadType, answerResponse, edit, questionImage }) => {
 
     const handleGetSolution = async () => {
         setIsLoading(true)
@@ -70,6 +71,8 @@ const Action: React.FC<Props> = ({ setCapturedImageType, setUploadType, setEdit,
                 setSetSimilarQuestion(data);
                 setUploadType("Answer")
                 setCapturedImageType("")
+                setEvaluation("")
+                setAnswerResponse("")
             } else {
                 console.error("Error:", data);
                 alert(`Request failed: ${data.error || "Unknown error"}`);
@@ -116,15 +119,26 @@ const Action: React.FC<Props> = ({ setCapturedImageType, setUploadType, setEdit,
     };
 
     return (
-        <div className="absolute flex justify-around items-center bg-[#152143] rounded-3xl m-[auto] w-[54%] left-[23%] mt-8 h-[80px] z-[10]">
+        <div className="absolute flex justify-around items-center bg-[#152143] rounded-3xl m-[auto] w-[54%] left-[23%] mt-[-82px] h-[80px] z-[10]">
             <h2 className="text-yellow-500 font-bold text-2xl">ACTION</h2>
             <div className="flex gap-4">
-                <button onClick={() => setEdit(!edit)} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
-                    {!edit ? "EDIT" : "OK?"}
-                </button>
-                <button style={{ opacity: !capturedImageType ? "50%" : "100%", pointerEvents: !capturedImageType ? "none" : "visible" }} disabled={!capturedImageType ? true : false} onClick={uploadType === "Answer" ? postEvaluation : handleGetSolution} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
-                    SUBMIT
-                </button>
+                {!edit &&
+                    <button onClick={() => setEdit(true)} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
+                        EDIT
+                    </button>
+                }
+                {edit &&
+                    <button onClick={() => {
+                        if (uploadType === "Answer") {
+                            postEvaluation();
+                        } else {
+                            handleGetSolution();
+                        }
+                        setEdit(false);
+                    }} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
+                        OK?
+                    </button>
+                }
                 <button style={{ opacity: !solutionResponses ? "50%" : "100%", pointerEvents: !solutionResponses ? "none" : "visible" }} disabled={!solutionResponses ? true : false} onClick={handleGenerateQuestion} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
                     SIMILAR QUESTION
                 </button>
