@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
     setSolutionResponses: (response: any) => void;
@@ -6,14 +6,18 @@ interface Props {
     setIsLoading: (loading: boolean) => void;
     setEdit: (edit: boolean) => void;
     setEvaluation: (evaluation: any) => void;
+    setUploadType: (type: string) => void;
+    setCapturedImageType: (type: string) => void;
     questionImage: string;
     answerResponse: any;
+    solutionResponses: any;
     edit: boolean;
+    capturedImageType: string;
     uploadType: string;
 }
 
 
-const Action: React.FC<Props> = ({ setEdit, setSetSimilarQuestion, setSolutionResponses, setIsLoading, setEvaluation, uploadType, answerResponse, edit, questionImage }) => {
+const Action: React.FC<Props> = ({ setCapturedImageType, setUploadType, setEdit, setSetSimilarQuestion, setSolutionResponses, setIsLoading, setEvaluation, capturedImageType, solutionResponses, uploadType, answerResponse, edit, questionImage }) => {
 
     const handleGetSolution = async () => {
         setIsLoading(true)
@@ -64,6 +68,8 @@ const Action: React.FC<Props> = ({ setEdit, setSetSimilarQuestion, setSolutionRe
             const data = await response.json();
             if (response.ok) {
                 setSetSimilarQuestion(data);
+                setUploadType("Answer")
+                setCapturedImageType("")
             } else {
                 console.error("Error:", data);
                 alert(`Request failed: ${data.error || "Unknown error"}`);
@@ -104,6 +110,8 @@ const Action: React.FC<Props> = ({ setEdit, setSetSimilarQuestion, setSolutionRe
             console.error("Fetch Error:", error);
             alert("An error occurred while connecting to the server.");
             return null;
+        } finally {
+            setIsLoading(false); // Stop loading
         }
     };
 
@@ -114,11 +122,11 @@ const Action: React.FC<Props> = ({ setEdit, setSetSimilarQuestion, setSolutionRe
                 <button onClick={() => setEdit(!edit)} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
                     {!edit ? "EDIT" : "OK?"}
                 </button>
-                <button onClick={uploadType === "Answer" ? postEvaluation : handleGetSolution} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
+                <button style={{ opacity: !capturedImageType ? "50%" : "100%", pointerEvents: !capturedImageType ? "none" : "visible" }} disabled={!capturedImageType ? true : false} onClick={uploadType === "Answer" ? postEvaluation : handleGetSolution} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
                     SUBMIT
                 </button>
-                <button onClick={handleGenerateQuestion} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
-                    GENERATE QUESTION
+                <button style={{ opacity: !solutionResponses ? "50%" : "100%", pointerEvents: !solutionResponses ? "none" : "visible" }} disabled={!solutionResponses ? true : false} onClick={handleGenerateQuestion} className="px-2 py-1 bg-[#6aa4a5] text-black font-bold rounded hover:bg-gray-400">
+                    SIMILAR QUESTION
                 </button>
             </div>
         </div>

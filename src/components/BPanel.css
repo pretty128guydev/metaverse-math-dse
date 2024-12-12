@@ -1,24 +1,3 @@
-.mq-math-mode .mq-text-mode {
-    display: flex;
-    flex-wrap: wrap;
-    pointer-events: none;
-    white-space: normal;
-    word-wrap: break-word;
-    align-items: center;
-}
-
-.mq-root-block .mq-hasCursor {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.mq-hasCursor {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.mq-math-mode {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+.mq-textcolor .mq-text-mode {
+    display: block;
 }

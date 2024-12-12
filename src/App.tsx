@@ -14,16 +14,18 @@ const calculateZoom = () => {
 };
 
 const App: React.FC = () => {
-  const [zoom, setZoom] = useState(calculateZoom());
-  const [apiResponses] = useState<string>("");
-  const [questionImage, setQuestionImage] = useState<string>("");
+  const [uploadType, setUploadType] = useState<string>("Question");
   const [solutionResponses, setSolutionResponses] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [similarQuestion, setSetSimilarQuestion] = useState<string>("");
+  const [questionImage, setQuestionImage] = useState<string>("");
   const [answerResponse, setAnswerResponse] = useState<any>("");
   const [evaluation, setEvaluation] = useState<string>("");
+  const [apiResponses] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [mainQuestionValid, setMainQuestionValid] = useState<number>(0);
   const [edit, setEdit] = useState<boolean>(false);
-  const [uploadType, setUploadType] = useState<string>("Question");
+  const [zoom, setZoom] = useState(calculateZoom());
+  const [capturedImageType, setCapturedImageType] = useState<string>("");
 
   useEffect(() => {
     const handleResize = () => setZoom(calculateZoom());
@@ -45,12 +47,16 @@ const App: React.FC = () => {
         <div className="min-h-screen flex-grow flex flex-col sm:flex-row justify-around">
           {/* Upload */}
           <Upload
+            setCapturedImageType={setCapturedImageType}
+            questionImage={questionImage}
             setIsLoading={setIsLoading}
+            setSolutionResponses={setSolutionResponses}
             setQuestionImage={setQuestionImage}
             setAnswerResponse={setAnswerResponse}
             setEvaluation={setEvaluation}
             uploadType={uploadType}
             setUploadType={setUploadType}
+            mainQuestionValid={mainQuestionValid}
           />
 
           {/* Actions */}
@@ -59,6 +65,10 @@ const App: React.FC = () => {
               {/* {Actions} */}
               <Action
                 edit={edit}
+                capturedImageType={capturedImageType}
+                setCapturedImageType={setCapturedImageType}
+                setUploadType={setUploadType}
+                solutionResponses={solutionResponses}
                 setSolutionResponses={setSolutionResponses}
                 questionImage={questionImage}
                 setIsLoading={setIsLoading}
@@ -70,17 +80,21 @@ const App: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-1 h-full">
                 <BPanel
                   uploadType={uploadType}
-                  setAnswerResponse={setAnswerResponse}
+                  mainQuestionValid={mainQuestionValid}
                   edit={edit}
                   answerResponse={answerResponse}
                   similarQuestion={similarQuestion}
+                  questionImage={questionImage}
+                  isLoading={isLoading}
+                  setAnswerResponse={setAnswerResponse}
                   setQuestionImage={setQuestionImage}
                   setIsLoading={setIsLoading}
-                  solutionResponses={solutionResponses}
-                  questionImage={questionImage}
-                  isLoading={isLoading} />
+                  setMainQuestionValid={setMainQuestionValid}
+                />
                 <CPanel
+                  uploadType={uploadType}
                   evaluation={evaluation}
+                  solutionResponses={solutionResponses}
                   isLoading={isLoading} />
               </div>
             </div>

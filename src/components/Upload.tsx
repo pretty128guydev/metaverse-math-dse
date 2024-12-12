@@ -11,7 +11,11 @@ interface UploadProps {
     setAnswerResponse: (response: any) => void;
     setEvaluation: (evaluation: any) => void;
     setUploadType: (type: string) => void;
+    setSolutionResponses: (response: any) => void;
+    setCapturedImageType: (type: string) => void;
     uploadType: string;
+    mainQuestionValid: number;
+    questionImage: string;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -20,7 +24,11 @@ const Upload: React.FC<UploadProps> = ({
     setAnswerResponse,
     setEvaluation,
     setUploadType,
-    uploadType
+    setSolutionResponses,
+    setCapturedImageType,
+    mainQuestionValid,
+    uploadType,
+    questionImage
 }) => {
 
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -33,6 +41,19 @@ const Upload: React.FC<UploadProps> = ({
     const changeUploadType = () => {
         setUploadType(uploadType === "Question" ? "Answer" : "Question");
     };
+
+    useEffect(() => {
+        if (mainQuestionValid >= 2 && capturedImage) {
+            handleSubmit(capturedImage);
+        }
+        console.log(mainQuestionValid, questionImage)
+        if (mainQuestionValid === 1 && questionImage) {
+            const payload = {
+                question: questionImage,
+            };
+            handleGetSolution(payload)
+        }
+    }, [mainQuestionValid])
 
     useEffect(() => {
         navigator.mediaDevices
@@ -87,6 +108,7 @@ const Upload: React.FC<UploadProps> = ({
                         handleSubmit(compressedBase64);
                         setCapturedImage(compressedBase64);
                         setDropdownOpen(false);
+                        setCapturedImageType(uploadType)
                     });
                 } else {
                     toast.error("Failed to upload image. Please try again.", { autoClose: 3000 });
@@ -143,6 +165,34 @@ const Upload: React.FC<UploadProps> = ({
         };
     };
 
+    const handleGetSolution = async (payload: any) => {
+        setIsLoading(true);
+        try {
+            const response = await fetch("http://ken6a03.pythonanywhere.com/api/solution/solve", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Success:", data);
+                setSolutionResponses(data);
+            } else {
+                console.error("Error:", data);
+                alert(`Request failed: ${data.error || "Unknown error"}`);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Check the console for details.");
+        } finally {
+            setIsLoading(false); // Stop loading
+        }
+    }
+
     const handleSubmit = async (image: string) => {
         setIsLoading(true);
 
@@ -172,7 +222,8 @@ const Upload: React.FC<UploadProps> = ({
 
                 const data = await response.json();
                 if (response.ok) {
-                    setQuestionImage(data?.text);
+                    const tmpQuestionImage = data?.text
+                    setQuestionImage(tmpQuestionImage);
                 } else {
                     console.error("Error:", data);
                     alert(`Request failed: ${data.error || "Unknown error"}`);
@@ -184,8 +235,35 @@ const Upload: React.FC<UploadProps> = ({
 
                 if (response.data && response.data.text) {
                     const responseText = response.data.text;
-
                     setAnswerResponse(responseText);
+
+                    const payload = {
+                        final_answer: responseText?.final_answer,
+                        steps: responseText?.steps,
+                    };
+
+                    try {
+                        const response = await fetch("http://ken6a03.pythonanywhere.com/api/solution/evaluate", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            const evaluationData = data?.evaluation?.steps || [];
+                            setEvaluation(evaluationData);
+                        } else {
+                            console.error("API Error:", data);
+                            alert(`Request failed: ${data.error || "Unknown error"}`);
+                            setEvaluation([]);
+                            return null;
+                        }
+                    } catch (error) {
+                        console.error("Fetch Error:", error);
+                        alert("An error occurred while connecting to the server.");
+                        return null;
+                    }
                 } else {
                     toast.error("Failed to extract text from the image.", { autoClose: 3000 });
                 }
