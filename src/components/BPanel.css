@@ -20,3 +20,22 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #555; /* Darker thumb color on hover */
 }
+
+.mq-root-block {
+    display: inline-block !important;
+    width: 100% !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+.mq-text-mode {
+    display: inline-block !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+.mq-math-mode {
+    width: 100% !important;
+}

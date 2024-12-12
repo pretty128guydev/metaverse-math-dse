@@ -58,6 +58,7 @@ function isValidLaTeX(latex: string): boolean {
         return false;
     }
 }
+
 const RenderSteps: React.FC<{ steps: string[], editMode: boolean, onEdit: (index: number, newStep: string) => void }> = ({ steps, editMode, onEdit }) => (
     <>
         <h3 className="text-lg font-medium mb-2">Solution Steps:</h3>
@@ -81,7 +82,6 @@ const RenderSteps: React.FC<{ steps: string[], editMode: boolean, onEdit: (index
 
 const BPanel: React.FC<Props> = ({ answerResponse, similarQuestion, questionImage, edit, uploadType, mainQuestionValid, setQuestionImage, setAnswerResponse, setMainQuestionValid, isLoading }) => {
     const [mainQuestion, setMainQuestion] = useState<string>("");
-    const [solutionFinalAnswer, setSolutionFinalAnswer] = useState<string>("");
     const [generatedQuestion, setGeneratedQuestion] = useState<string>("");
     const [answerSteps, setAnswerSteps] = useState<string[]>([]);
     const [finalAnswer, setFinalAnswer] = useState<string>("");
@@ -141,7 +141,6 @@ const BPanel: React.FC<Props> = ({ answerResponse, similarQuestion, questionImag
         console.log(tmpanswerSteps);
         console.log(edit)
     }, [questionImage, similarQuestion, answerResponse, edit]);
-
 
     return (
         <div className="col-span-1 border-[15px] border-[#152143] rounded-2xl bg-gray-50 overflow-auto custom-scrollbar">
