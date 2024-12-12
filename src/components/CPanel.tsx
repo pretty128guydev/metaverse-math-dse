@@ -72,24 +72,27 @@ const RenderSolutionSteps: React.FC<{ steps: string[] }> = ({ steps }) => (
 const CPanel: React.FC<Props> = ({ evaluation, isLoading, solutionResponses, uploadType }) => {
 
     const [solutionFinalAnswer, setSolutionFinalAnswer] = useState<string>("");
+    const [topic, setTopic] = useState<string>("");
     const [solutionSteps, setSolutionSteps] = useState<string[]>([]);
 
     useEffect(() => {
 
         const tmpsolutionFinalAnswer = solutionResponses?.solution?.['final answer'];
         const tmpsteps = solutionResponses?.solution?.steps || [];
+        const tmptopic = solutionResponses?.solution?.topic;
         const normalizedSolutionFinalAnswer = normalizeSlashes(tmpsolutionFinalAnswer);
         const solutionFinalAnswerValid = isValidLaTeX(normalizedSolutionFinalAnswer);
 
         setSolutionFinalAnswer(normalizedSolutionFinalAnswer);
         setSolutionSteps(tmpsteps);
+        setTopic(tmptopic)
         if (!solutionFinalAnswerValid) {
             toast.error("An error occurred while analyzing the photo. Please try again.", { autoClose: 3000 });
         }
     }, [solutionResponses]);
 
     return (
-        <div className="col-span-2 border-[15px] border-[#152143] rounded-2xl bg-gray-50 overflow-hidden">
+        <div className="col-span-2 border-[15px] border-[#152143] rounded-2xl bg-gray-50 overflow-auto  custom-scrollbar">
             <div className='relative h-full w-full p-4'>
                 {isLoading && <ProgressBar isLoading={isLoading} />}
                 <h3 className="font-bold text-4xl ml-2 text-end">C</h3>
@@ -97,15 +100,20 @@ const CPanel: React.FC<Props> = ({ evaluation, isLoading, solutionResponses, upl
                     <div className="mt-[50px]" style={{
                         "pointerEvents": "none"
                     }}>
+                        <h4>Answer is {evaluation?.final_answer ? "Correct" : "Wrong"}</h4>
                         <RenderEvaluation evaluations={evaluation || []} />
                     </div>
                 }
                 {uploadType === "Question" && solutionSteps.length > 0 && (
                     <div className="mb-3 mt-[50px]" style={{ pointerEvents: "none" }}>
+                        <h4 className="text-lg font-medium mb-2">Topic:</h4>
+                        <h4 style={{ color: "black" }}> {topic}</h4>
                         <RenderSolutionSteps steps={solutionSteps} />
                         <h4 className="text-lg font-medium mb-2">Final Answer:</h4>
                         {isValidLaTeX(normalizeSlashes(solutionFinalAnswer)) ? (
-                            <StaticMathField style={{ color: "black" }}>{normalizeSlashes(solutionFinalAnswer)}</StaticMathField>
+                            <>
+                                <StaticMathField style={{ color: "black" }}>{normalizeSlashes(solutionFinalAnswer)}</StaticMathField>
+                            </>
                         ) : (
                             <p style={{ color: "red" }}>Invalid LaTeX: {solutionFinalAnswer}</p>
                         )}
