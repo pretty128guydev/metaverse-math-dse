@@ -100,8 +100,8 @@ const BPanel: React.FC<Props> = ({ answerResponse, similarQuestion, questionImag
 
 
     useEffect(() => {
-        console.log("Editing:", edit);
-        console.log("Current questionImage:", questionImage);
+        // console.log("Editing:", edit);
+        // console.log("Current questionImage:", questionImage);
 
         const tmpgeneratedQuestion = similarQuestion?.questions || "";
         const tmpmainquestion = questionImage || "";
@@ -136,8 +136,8 @@ const BPanel: React.FC<Props> = ({ answerResponse, similarQuestion, questionImag
         setFinalAnswer(normalizedFinalAnswer);
         setGeneratedQuestion(tmpgeneratedQuestion);
 
-        console.log(`mainquestion :`, tmpmainquestion);
-        console.log(`normalized:  `, normalizedMainQuestion);
+        // console.log(`mainquestion :`, tmpmainquestion);
+        // console.log(`normalized:  `, normalizedMainQuestion);
         console.log(tmpanswerSteps);
         console.log(edit)
     }, [questionImage, similarQuestion, answerResponse, edit]);

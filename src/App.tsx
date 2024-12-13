@@ -25,14 +25,14 @@ const App: React.FC = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [zoom, setZoom] = useState(calculateZoom());
   const [capturedImageType, setCapturedImageType] = useState<string>("");
-  const [disabledGenerateButton, setDisabledGenerateButton] = useState<boolean>(false);
+  const [disabledGenerateButton, setDisabledGenerateButton] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => setZoom(calculateZoom());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   return (
     <div
@@ -58,7 +58,6 @@ const App: React.FC = () => {
           mainQuestionValid={mainQuestionValid}
           setDisabledGenerateButton={setDisabledGenerateButton}
         />
-
         {/* Actions */}
         <div className="w-full sm:w-[67%] w-[90%] flex flex-col justify-between  sm:m-10 m-4">
           <div className="relative rounded-md p-4 flex-grow  mt-5">
@@ -78,7 +77,8 @@ const App: React.FC = () => {
               answerResponse={answerResponse}
               uploadType={uploadType}
               disabledGenerateButton={disabledGenerateButton}
-              setEdit={setEdit} />
+              setEdit={setEdit}
+            />
             <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-1 h-full">
               <BPanel
                 uploadType={uploadType}
@@ -97,7 +97,8 @@ const App: React.FC = () => {
                 uploadType={uploadType}
                 evaluation={evaluation}
                 solutionResponses={solutionResponses}
-                isLoading={isLoading} />
+                isLoading={isLoading}
+              />
             </div>
           </div>
         </div>
