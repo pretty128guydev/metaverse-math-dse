@@ -129,6 +129,7 @@ const Upload: React.FC<UploadProps> = ({
                 compressImage(imageSrc, (compressedBase64) => {
                     setCapturedImage(imageSrc);
                     handleSubmit(compressedBase64);
+                    setPhotoMode(false);
                 });
             } else {
                 toast.error("Failed to capture image. Please try again.", { autoClose: 3000 });
@@ -343,7 +344,7 @@ const Upload: React.FC<UploadProps> = ({
                             </div>
                         )}
                         {photoMode && (
-                            <div className="relative">
+                            <div className="absolute right-4 mt-[140px] ">
                                 <Webcam
                                     audio={false}
                                     ref={webcamRef}
