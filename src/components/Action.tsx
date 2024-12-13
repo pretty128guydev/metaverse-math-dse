@@ -119,7 +119,7 @@ const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setU
     };
     console.log(disabledGenerateButton)
     return (
-        <div className="absolute flex justify-around items-center bg-[#152143] rounded-3xl m-[auto] w-[54%] left-[23%] mt-[-82px] h-[80px] z-[10]">
+        <div className="absolute flex justify-around items-center bg-[#152143] rounded-3xl m-[auto] sm:w-[54%] left-[5%] sm:left-[23%] mt-[-82px] h-[80px] z-[10] w-[90%]">
             <h2 className="text-yellow-500 font-bold text-2xl">ACTION</h2>
             <div className="flex gap-4">
                 {!edit &&
