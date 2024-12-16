@@ -25,14 +25,14 @@ const App: React.FC = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [zoom, setZoom] = useState(calculateZoom());
   const [capturedImageType, setCapturedImageType] = useState<string>("");
-  const [disabledGenerateButton, setDisabledGenerateButton] = useState<boolean>(false);
+  const [disabledGenerateButton, setDisabledGenerateButton] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => setZoom(calculateZoom());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   return (
     <div
@@ -58,7 +58,6 @@ const App: React.FC = () => {
           mainQuestionValid={mainQuestionValid}
           setDisabledGenerateButton={setDisabledGenerateButton}
         />
-
         {/* Actions */}
         <div className="w-full sm:w-[67%] flex flex-col justify-between h-full min-h-screen">
           <div className="relative rounded-md flex-grow mt-5">
@@ -97,7 +96,8 @@ const App: React.FC = () => {
                 uploadType={uploadType}
                 evaluation={evaluation}
                 solutionResponses={solutionResponses}
-                isLoading={isLoading} />
+                isLoading={isLoading}
+              />
             </div>
           </div>
         </div>

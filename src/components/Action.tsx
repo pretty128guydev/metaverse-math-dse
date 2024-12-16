@@ -117,7 +117,7 @@ const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setU
             setIsLoading(false); // Stop loading
         }
     };
-    console.log(disabledGenerateButton)
+    // console.log(disabledGenerateButton)
     return (
         <div className="absolute sm:top-[calc(5%-3.6rem)] top-[-1.5rem] flex justify-around items-center bg-[#152143] rounded-3xl m-[auto] sm:w-[54%] left-[5%] sm:left-[23%] h-[70px] z-[10] w-[90%]">
             <h2 className="text-yellow-500 font-bold text-2xl">ACTION</h2>
