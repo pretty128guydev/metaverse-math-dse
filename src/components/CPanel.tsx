@@ -92,7 +92,7 @@ const CPanel: React.FC<Props> = ({ evaluation, isLoading, solutionResponses, upl
     }, [solutionResponses]);
 
     return (
-        <div className="sm:h-full min-h-[500px] h-[100%] col-span-2 border-[15px] border-[#152143] rounded-2xl bg-gray-50 overflow-auto custom-scrollbar">
+        <div className="sm:col-span-2 border-[15px] border-[#152143] rounded-2xl bg-gray-50 overflow-auto custom-scrollbar min-h-[300px]">
             <div className='relative h-full w-full p-4'>
                 {isLoading && <ProgressBar isLoading={isLoading} />}
                 <h3 className="font-bold text-4xl ml-2 text-end">C</h3>
@@ -100,14 +100,14 @@ const CPanel: React.FC<Props> = ({ evaluation, isLoading, solutionResponses, upl
                     <div className="mt-[0px]" style={{
                         "pointerEvents": "none"
                     }}>
-                        <h1 style={{color: "blue", fontWeight: "bold", fontSize: "25px", marginBottom: "20px"}}>Answer is {evaluation?.final_answer ? "Correct" : "Wrong"}</h1>
+                        <h1 style={{ color: "blue", fontWeight: "bold", fontSize: "25px", marginBottom: "20px" }}>Answer is {evaluation?.final_answer ? "Correct" : "Wrong"}</h1>
                         <RenderEvaluation evaluations={evaluation || []} />
                     </div>
                 }
                 {uploadType === "Question" && solutionSteps.length > 0 && (
                     <div className="mb-3" style={{ pointerEvents: "none" }}>
                         <h4 className="text-lg font-medium mb-2">Topic:</h4>
-                        <h4 style={{color: "blue", fontWeight: "bold", fontSize: "25px", marginBottom: "20px"}}> {topic}</h4>
+                        <h4 style={{ color: "blue", fontWeight: "bold", fontSize: "25px", marginBottom: "20px" }}> {topic}</h4>
                         <RenderSolutionSteps steps={solutionSteps} />
                         <h4 className="text-lg font-medium mb-2">Final Answer:</h4>
                         {isValidLaTeX(normalizeSlashes(solutionFinalAnswer)) ? (

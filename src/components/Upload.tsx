@@ -80,21 +80,26 @@ const Upload: React.FC<UploadProps> = ({
                 !dropdownRef.current.contains(event.target as Node)
             ) {
                 setDropdownOpen(false);
+                setPhotoMode(false);
             }
         };
 
         if (capturedImage) {
             setDropdownOpen(false);
+            setPhotoMode(false);
         }
 
         if (dropdownOpen) {
             document.addEventListener("mousedown", handleOutsideClick);
+            setPhotoMode(false);
         } else {
             document.removeEventListener("mousedown", handleOutsideClick);
+            setPhotoMode(false);
         }
 
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
+            setPhotoMode(false);
         };
     }, [dropdownOpen, capturedImage]);
 
@@ -133,6 +138,7 @@ const Upload: React.FC<UploadProps> = ({
                 });
             } else {
                 toast.error("Failed to capture image. Please try again.", { autoClose: 3000 });
+                setPhotoMode(false);
             }
         }
     };
@@ -216,7 +222,7 @@ const Upload: React.FC<UploadProps> = ({
                     image_data: `data:image/png;base64,${base64Image}`,
                 };
 
-                const response = await fetch("http://ken6a03.pythonanywhere.com/api/ocr/extract", {
+                const response = await fetch("https://ken6a03.pythonanywhere.com/api/ocr/extract", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -233,7 +239,7 @@ const Upload: React.FC<UploadProps> = ({
                     alert(`Request failed: ${data.error || "Unknown error"}`);
                 }
             } else if (uploadType === "Answer") {
-                const response = await axios.post("http://ken6a03.pythonanywhere.com/api/ocr/extract_answer", {
+                const response = await axios.post("https://ken6a03.pythonanywhere.com/api/ocr/extract_answer", {
                     image_data: `data:image/png;base64,${base64Image}`,
                 });
 
@@ -247,7 +253,7 @@ const Upload: React.FC<UploadProps> = ({
                     };
 
                     try {
-                        const response = await fetch("http://ken6a03.pythonanywhere.com/api/solution/evaluate", {
+                        const response = await fetch("https://ken6a03.pythonanywhere.com/api/solution/evaluate", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(payload),
@@ -290,7 +296,7 @@ const Upload: React.FC<UploadProps> = ({
     };
 
     return (
-        <div className="w-[90%] flex flex-col gap-4 sm:m-10 m-5 sm:w-[27%] h-[500px] sm:h-auto">
+        <div className="w-[90%] flex flex-col gap-4 sm:m-10 m-5 sm:w-[27%] h-auto">
             <div className="h-full flex flex-col justify-between mb-4">
                 <div className="flex items-center gap-2 cursor-pointer" onClick={changeUploadType}>
                     <h2 className="text-white font-bold text-3xl ml-3 fade-in-out">
@@ -298,7 +304,7 @@ const Upload: React.FC<UploadProps> = ({
                     </h2>
                     <MdOutlineChangeCircle color="white" size={25} />
                 </div>
-                <div className="border-[15px] border-[#152143] rounded-2xl bg-white p-4 h-full relative text-center">
+                <div className="border-[15px] border-[#152143] rounded-2xl bg-white p-4 h-full relative text-center min-h-[300px]">
                     <div className="flex justify-between items-center">
                         <h3 className="z-[1] font-bold text-4xl ml-2">A</h3>
                         <button

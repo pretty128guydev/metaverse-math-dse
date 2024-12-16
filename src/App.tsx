@@ -36,9 +36,9 @@ const App: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className="min-h-screen flex flex-col h-auto"
       style={{
-        backgroundImage: "url(/background.jpeg)",
+        backgroundImage: "url(/background.png)",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
@@ -60,8 +60,8 @@ const App: React.FC = () => {
         />
 
         {/* Actions */}
-        <div className="w-full sm:w-[67%] w-[90%] flex flex-col justify-between  sm:m-10 m-4">
-          <div className="relative rounded-md p-4 flex-grow  mt-5">
+        <div className="w-full sm:w-[67%] flex flex-col justify-between h-full min-h-screen">
+          <div className="relative rounded-md flex-grow mt-5">
             {/* {Actions} */}
             <Action
               edit={edit}
@@ -79,7 +79,7 @@ const App: React.FC = () => {
               uploadType={uploadType}
               disabledGenerateButton={disabledGenerateButton}
               setEdit={setEdit} />
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-1 h-full">
+            <div className="absolute bottom-[calc(5%+1rem)] grid grid-cols-1 sm:grid-cols-3 gap-1 h-[calc(90%-2rem)] w-[90%] left-[5%] h-full">
               <BPanel
                 uploadType={uploadType}
                 mainQuestionValid={mainQuestionValid}
