@@ -57,6 +57,7 @@ const App: React.FC = () => {
           setUploadType={setUploadType}
           mainQuestionValid={mainQuestionValid}
           setDisabledGenerateButton={setDisabledGenerateButton}
+          similarQuestion={similarQuestion}
         />
         {/* Actions */}
         <div className="w-full sm:w-[67%] flex flex-col justify-between h-full min-h-screen">
@@ -78,7 +79,7 @@ const App: React.FC = () => {
               uploadType={uploadType}
               disabledGenerateButton={disabledGenerateButton}
               setEdit={setEdit} />
-            <div className="absolute bottom-[calc(5%+1rem)] grid grid-cols-1 sm:grid-cols-3 gap-1 h-[calc(90%-2rem)] w-[90%] left-[5%] h-full">
+            <div className="absolute bottom-[calc(5%+1rem)] grid grid-cols-1 sm:grid-cols-3 gap-1 h-[calc(90%-2rem)] w-[90%] left-[5%]">
               <BPanel
                 uploadType={uploadType}
                 mainQuestionValid={mainQuestionValid}

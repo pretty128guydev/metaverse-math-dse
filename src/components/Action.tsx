@@ -73,6 +73,7 @@ const Action: React.FC<Props> = ({ setAnswerResponse, setCapturedImageType, setU
                 setCapturedImageType("")
                 setEvaluation("")
                 setAnswerResponse("")
+                setSolutionResponses("")
             } else {
                 console.error("Error:", data);
                 alert(`Request failed: ${data.error || "Unknown error"}`);
